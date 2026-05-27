@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digitális egészség – szavazás</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap');
+
+  :root {
+    --green: #1D9E75;
+    --green-light: #E1F5EE;
+    --green-mid: #5DCAA5;
+    --green-dark: #0F6E56;
+    --red: #E24B4A;
+    --red-light: #FCEBEB;
+    --bg: #F8FAF9;
+    --card: #ffffff;
+    --text: #1a1a18;
+    --muted: #6b7c73;
+    --border: rgba(0,0,0,0.08);
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── VOTER VIEW ── */
+  #voter-view { display: block; }
+  #results-view { display: none; }
+  #admin-view { display: none; }
+
+  .voter-wrap {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 24px 16px 40px;
+  }
+
+  .brand {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .brand-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--green-dark);
+    letter-spacing: -0.3px;
+  }
+  .brand-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .progress-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 99px;
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+
+  .q-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .q-top {
+    background: var(--green);
+    padding: 20px 22px 16px;
+  }
+  .q-num {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 6px;
+  }
+  .q-text {
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.4;
+  }
+
+  .q-opts {
+    padding: 16px 18px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .opt {
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 12px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    background: #fff;
+    color: var(--text);
+    transition: all 0.15s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .opt .opt-icon { font-size: 28px; }
+  .opt:hover { border-color: var(--green-mid); background: var(--green-light); }
+  .opt.yes:hover, .opt.yes.selected { border-color: var(--green); background: var(--green-light); color: var(--green-dark); }
+  .opt.no:hover, .opt.no.selected { border-color: var(--red); background: var(--red-light); color: var(--red); }
+  .opt.selected { transform: scale(0.98); }
+
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2px;
+  }
+  .nav-btn {
+    padding: 10px 24px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--text);
+    transition: all 0.15s;
+  }
+  .nav-btn:hover { background: var(--bg); }
+  .nav-btn.primary {
+    background: var(--green);
+    color: #fff;
+    border-color: var(--green);
+  }
+  .nav-btn.primary:hover { background: var(--green-dark); }
+  .nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+  .done-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 40px 24px;
+    text-align: center;
+  }
+  .done-icon { font-size: 52px; margin-bottom: 16px; }
+  .done-title { font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--green-dark); margin-bottom: 8px; }
+  .done-sub { font-size: 15px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
+
+  /* ── RESULTS VIEW ── */
+  #results-view {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+  }
+
+  .res-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .res-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--green-dark);
+  }
+  .vote-badge {
+    background: var(--green-light);
+    color: var(--green-dark);
+    border-radius: 99px;
+    padding: 5px 14px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .res-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 22px 24px;
+    margin-bottom: 16px;
+  }
+  .res-q-num { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .res-q-text { font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 18px; line-height: 1.4; }
+
+  .res-bar-wrap { margin-bottom: 10px; }
+  .res-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  .res-bar-label .lbl { font-weight: 500; }
+  .res-bar-label .cnt { color: var(--muted); }
+  .res-track {
+    height: 28px;
+    background: var(--bg);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .res-fill {
+    height: 100%;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    transition: width 0.6s ease;
+    min-width: 2px;
+  }
+  .res-fill.yes { background: var(--green); }
+  .res-fill.no { background: var(--red); }
+  .res-fill-pct { font-size: 13px; font-weight: 600; color: #fff; }
+
+  /* ── ADMIN PANEL ── */
+  #admin-view {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+  }
+  .admin-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+    margin-bottom: 16px;
+  }
+  .admin-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--green-dark); margin-bottom: 6px; }
+  .admin-sub { font-size: 14px; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
+  #qr-canvas { display: block; margin: 0 auto 16px; border-radius: 10px; }
+  .url-box {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--muted);
+    word-break: break-all;
+    text-align: center;
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+  }
+
+  /* ── NAV BAR ── */
+  .top-nav {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .top-nav button {
+    padding: 6px 16px;
+    border-radius: 99px;
+    border: 1px solid var(--border);
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.15s;
+  }
+  .top-nav button.active {
+    background: var(--green);
+    color: #fff;
+    border-color: var(--green);
+  }
+
+  @media (max-width: 420px) {
+    .q-text { font-size: 16px; }
+    .opt { padding: 14px 8px; font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+  <button class="active" onclick="switchView('voter')">🗳️ Szavazás</button>
+  <button onclick="switchView('results')">📊 Eredmények</button>
+  <button onclick="switchView('admin')">⚙️ Admin / QR kód</button>
+</div>
+
+<!-- VOTER VIEW -->
+<div id="voter-view">
+  <div class="voter-wrap">
+    <div class="brand">
+      <div class="brand-title">Digitális egészség</div>
+      <div class="brand-sub">Csemegi Károly Emlékkonferencia · 2026</div>
+    </div>
+
+    <div id="vote-screen">
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:20%"></div></div>
+      <div class="q-card" id="q-card">
+        <div class="q-top">
+          <div class="q-num" id="q-num">1. kérdés / 5</div>
+          <div class="q-text" id="q-text"></div>
+        </div>
+        <div class="q-opts">
+          <button class="opt yes" id="opt-yes" onclick="selectOpt(0)">
+            <span class="opt-icon">✓</span>
+            <span>Igen</span>
+          </button>
+          <button class="opt no" id="opt-no" onclick="selectOpt(1)">
+            <span class="opt-icon">✗</span>
+            <span>Nem</span>
+          </button>
+        </div>
+      </div>
+      <div class="nav-row">
+        <button class="nav-btn" id="btn-prev" onclick="prevQ()" disabled>← Vissza</button>
+        <button class="nav-btn primary" id="btn-next" onclick="nextQ()" disabled>Következő →</button>
+      </div>
+    </div>
+
+    <div id="done-screen" style="display:none;">
+      <div class="done-card">
+        <div class="done-icon">🎉</div>
+        <div class="done-title">Köszönjük a szavazatot!</div>
+        <div class="done-sub">Válaszai sikeresen rögzítve.<br>Az eredmények élőben frissülnek.</div>
+        <button class="nav-btn primary" onclick="switchView('results')" style="margin-bottom:10px; width:100%; padding:13px;">Eredmények megtekintése →</button>
+        <button class="nav-btn" onclick="resetVote()" style="width:100%; padding:13px;">Új szavazás</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS VIEW -->
+<div id="results-view">
+  <div class="res-header">
+    <div class="res-title">Eredmények</div>
+    <div class="vote-badge" id="total-badge">0 szavazat</div>
+  </div>
+  <div id="res-cards"></div>
+  <button class="nav-btn" onclick="switchView('voter')" style="margin-top:8px;">← Vissza a szavazáshoz</button>
+</div>
+
+<!-- ADMIN VIEW -->
+<div id="admin-view">
+  <div class="admin-card">
+    <div class="admin-title">QR kód a szavazáshoz</div>
+    <div class="admin-sub">Töltsd fel a fájlt GitHub Pages-re, add meg az URL-t, és itt generálódik a QR kód amelyet kivetíthetsz.</div>
+    <canvas id="qr-canvas" width="200" height="200"></canvas>
+    <div class="url-box" id="qr-url-display">Az oldal aktuális URL-je lesz a QR kód tartalma.</div>
+    <button class="nav-btn primary" onclick="generateQR()" style="width:100%; padding:12px; margin-bottom:10px;">QR kód generálása az aktuális URL-ből</button>
+    <div style="font-size:13px; color:var(--muted); line-height:1.6;">
+      <strong>Saját URL megadása:</strong><br>
+      <input type="text" id="custom-url" placeholder="https://felhasználónév.github.io/szavazas" 
+        style="width:100%; padding:9px 12px; border-radius:8px; border:1px solid var(--border); font-size:13px; margin-top:8px; margin-bottom:8px; font-family:'DM Sans',sans-serif;">
+      <button class="nav-btn" onclick="generateQRCustom()" style="width:100%; padding:10px;">QR kód generálása megadott URL-ből</button>
+    </div>
+  </div>
+  <div class="admin-card">
+    <div style="font-size:15px; font-weight:600; margin-bottom:12px;">GitHub Pages feltöltés – lépésről lépésre</div>
+    <ol style="font-size:14px; color:var(--muted); line-height:2; padding-left:18px;">
+      <li>Menj a <strong>github.com</strong> oldalra és hozz létre ingyenes fiókot</li>
+      <li>Kattints a <strong>New repository</strong> gombra</li>
+      <li>Adj nevet: pl. <code style="background:var(--bg); padding:2px 6px; border-radius:4px;">szavazas</code></li>
+      <li>Állítsd <strong>Public</strong>-ra, majd <strong>Create</strong></li>
+      <li>Kattints <strong>uploading an existing file</strong> linkre</li>
+      <li>Húzd be a letöltött <code style="background:var(--bg); padding:2px 6px; border-radius:4px;">szavazas.html</code> fájlt</li>
+      <li>Nevezd át <strong>index.html</strong>-re feltöltés előtt (vagy utána a GitHub-on)</li>
+      <li>Settings → Pages → Branch: <strong>main</strong> → Save</li>
+      <li>~1 perc múlva elérhető: <strong>felhasználónév.github.io/szavazas</strong></li>
+    </ol>
+  </div>
+  <div class="admin-card">
+    <div style="font-size:14px; font-weight:600; margin-bottom:8px;">Szavazatok visszaállítása</div>
+    <div style="font-size:13px; color:var(--muted); margin-bottom:12px;">Ha törölni szeretnéd az összes eddigi szavazatot (pl. teszt után).</div>
+    <button class="nav-btn" onclick="resetAllVotes()" style="border-color:#E24B4A; color:#E24B4A; width:100%; padding:10px;">Összes szavazat törlése</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+const questions = [
+  "Használt már CGM-et (folyamatos vércukormérő) a vércukra monitorozására?",
+  "Szokta monitorozni az alvását valamilyen eszközzel?",
+  "Orvosával megosztotta az eszközeivel gyűjtött adatokat?",
+  "Vett már igénybe általános célú AI chatbottól (pl. ChatGPT, Gemini) egészségügyi tanácsot?",
+  "Vett igénybe predikciós véranalízis szolgáltatást?"
+];
+
+const STORE_KEY = 'dh_votes_2026';
+
+function loadVotes() {
+  try { return JSON.parse(localStorage.getItem(STORE_KEY)) || questions.map(()=>[0,0]); }
+  catch(e) { return questions.map(()=>[0,0]); }
+}
+function saveVotes(v) { localStorage.setItem(STORE_KEY, JSON.stringify(v)); }
+
+let votes = loadVotes();
+let currentQ = 0;
+let userAnswers = new Array(questions.length).fill(null);
+let hasVoted = false;
+
+function switchView(v) {
+  ['voter','results','admin'].forEach(id => {
+    document.getElementById(id+'-view').style.display = 'none';
+  });
+  document.getElementById(v+'-view').style.display = 'block';
+  document.querySelectorAll('.top-nav button').forEach((b,i) => {
+    b.classList.toggle('active', ['voter','results','admin'][i] === v);
+  });
+  if (v === 'results') renderResults();
+  if (v === 'admin') generateQR();
+}
+
+function renderQ() {
+  document.getElementById('q-num').textContent = (currentQ+1) + '. kérdés / ' + questions.length;
+  document.getElementById('q-text').textContent = questions[currentQ];
+  document.getElementById('prog-fill').style.width = ((currentQ+1)/questions.length*100) + '%';
+  const ans = userAnswers[currentQ];
+  document.getElementById('opt-yes').classList.toggle('selected', ans === 0);
+  document.getElementById('opt-no').classList.toggle('selected', ans === 1);
+  document.getElementById('btn-prev').disabled = currentQ === 0;
+  document.getElementById('btn-next').disabled = ans === null;
+  document.getElementById('btn-next').textContent = currentQ === questions.length-1 ? 'Szavazat leadása ✓' : 'Következő →';
+}
+
+function selectOpt(i) {
+  userAnswers[currentQ] = i;
+  document.getElementById('opt-yes').classList.toggle('selected', i === 0);
+  document.getElementById('opt-no').classList.toggle('selected', i === 1);
+  document.getElementById('btn-next').disabled = false;
+}
+
+function nextQ() {
+  if (userAnswers[currentQ] === null) return;
+  if (currentQ === questions.length - 1) {
+    votes = loadVotes();
+    userAnswers.forEach((ans, qi) => { if (ans !== null) votes[qi][ans]++; });
+    saveVotes(votes);
+    document.getElementById('vote-screen').style.display = 'none';
+    document.getElementById('done-screen').style.display = 'block';
+  } else {
+    currentQ++;
+    renderQ();
+  }
+}
+
+function prevQ() {
+  if (currentQ > 0) { currentQ--; renderQ(); }
+}
+
+function resetVote() {
+  currentQ = 0;
+  userAnswers = new Array(questions.length).fill(null);
+  document.getElementById('vote-screen').style.display = 'block';
+  document.getElementById('done-screen').style.display = 'none';
+  renderQ();
+}
+
+function renderResults() {
+  votes = loadVotes();
+  const total = votes[0].reduce((a,b)=>a+b,0);
+  document.getElementById('total-badge').textContent = total + ' szavazat';
+  let html = '';
+  questions.forEach((q, qi) => {
+    const yes = votes[qi][0], no = votes[qi][1];
+    const t = yes + no;
+    const yesPct = t > 0 ? Math.round(yes/t*100) : 0;
+    const noPct = t > 0 ? Math.round(no/t*100) : 0;
+    html += `<div class="res-card">
+      <div class="res-q-num">${qi+1}. kérdés</div>
+      <div class="res-q-text">${q}</div>
+      <div class="res-bar-wrap">
+        <div class="res-bar-label"><span class="lbl">✓ Igen</span><span class="cnt">${yes} fő · ${yesPct}%</span></div>
+        <div class="res-track"><div class="res-fill yes" style="width:${yesPct}%">${yesPct > 8 ? `<span class="res-fill-pct">${yesPct}%</span>` : ''}</div></div>
+      </div>
+      <div class="res-bar-wrap">
+        <div class="res-bar-label"><span class="lbl">✗ Nem</span><span class="cnt">${no} fő · ${noPct}%</span></div>
+        <div class="res-track"><div class="res-fill no" style="width:${noPct}%">${noPct > 8 ? `<span class="res-fill-pct">${noPct}%</span>` : ''}</div></div>
+      </div>
+      ${t===0 ? '<p style="font-size:13px;color:var(--muted);margin-top:8px;">Még nincs szavazat.</p>' : ''}
+    </div>`;
+  });
+  document.getElementById('res-cards').innerHTML = html;
+}
+
+function generateQR() {
+  const url = window.location.href.split('?')[0];
+  document.getElementById('qr-url-display').textContent = url;
+  drawQR(url);
+}
+
+function generateQRCustom() {
+  const url = document.getElementById('custom-url').value.trim();
+  if (!url) { alert('Add meg az URL-t!'); return; }
+  document.getElementById('qr-url-display').textContent = url;
+  drawQR(url);
+}
+
+function drawQR(url) {
+  const canvas = document.getElementById('qr-canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0,0,200,200);
+  try {
+    new QRCode(canvas, {
+      text: url, width: 200, height: 200,
+      colorDark: '#0F6E56', colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  } catch(e) {
+    ctx.fillStyle = '#E1F5EE';
+    ctx.fillRect(0,0,200,200);
+    ctx.fillStyle = '#0F6E56';
+    ctx.font = '13px DM Sans';
+    ctx.textAlign = 'center';
+    ctx.fillText('QR kód: ' + url, 100, 100);
+  }
+}
+
+function resetAllVotes() {
+  if (confirm('Biztosan törölsz minden szavazatot?')) {
+    localStorage.removeItem(STORE_KEY);
+    votes = questions.map(()=>[0,0]);
+    alert('Szavazatok törölve.');
+  }
+}
+
+renderQ();
+</script>
+</body>
+</html>
