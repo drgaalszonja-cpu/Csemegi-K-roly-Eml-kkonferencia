@@ -32,260 +32,265 @@
     padding: 0;
   }
 
-  /* ── VOTER VIEW ── */
   #voter-view { display: block; }
   #results-view { display: none; }
   #admin-view { display: none; }
+  #projector-view { display: none; }
 
+  /* ── VOTER VIEW ── */
   .voter-wrap {
     max-width: 480px;
     margin: 0 auto;
     padding: 24px 16px 40px;
   }
 
-  .brand {
-    text-align: center;
-    margin-bottom: 28px;
-  }
-  .brand-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 22px;
-    color: var(--green-dark);
-    letter-spacing: -0.3px;
-  }
-  .brand-sub {
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
+  .brand { text-align: center; margin-bottom: 28px; }
+  .brand-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--green-dark); letter-spacing: -0.3px; }
+  .brand-sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
 
-  .progress-bar {
-    height: 3px;
-    background: var(--border);
-    border-radius: 99px;
-    margin-bottom: 28px;
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    background: var(--green);
-    border-radius: 99px;
-    transition: width 0.4s ease;
-  }
+  .progress-bar { height: 3px; background: var(--border); border-radius: 99px; margin-bottom: 28px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--green); border-radius: 99px; transition: width 0.4s ease; }
 
-  .q-card {
-    background: var(--card);
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    overflow: hidden;
-    margin-bottom: 20px;
-  }
+  .q-card { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; margin-bottom: 20px; }
+  .q-top { background: var(--green); padding: 20px 22px 16px; }
+  .q-num { font-size: 11px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 6px; }
+  .q-text { font-size: 18px; font-weight: 500; color: #fff; line-height: 1.4; }
+  .q-opts { padding: 16px 18px 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-  .q-top {
-    background: var(--green);
-    padding: 20px 22px 16px;
-  }
-  .q-num {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.75);
-    margin-bottom: 6px;
-  }
-  .q-text {
-    font-size: 18px;
-    font-weight: 500;
-    color: #fff;
-    line-height: 1.4;
-  }
-
-  .q-opts {
-    padding: 16px 18px 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  .opt {
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    padding: 18px 12px;
-    text-align: center;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 500;
-    background: #fff;
-    color: var(--text);
-    transition: all 0.15s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-  }
+  .opt { border: 1.5px solid var(--border); border-radius: 10px; padding: 18px 12px; text-align: center; cursor: pointer; font-size: 16px; font-weight: 500; background: #fff; color: var(--text); transition: all 0.15s; display: flex; flex-direction: column; align-items: center; gap: 8px; }
   .opt .opt-icon { font-size: 28px; }
   .opt:hover { border-color: var(--green-mid); background: var(--green-light); }
   .opt.yes:hover, .opt.yes.selected { border-color: var(--green); background: var(--green-light); color: var(--green-dark); }
   .opt.no:hover, .opt.no.selected { border-color: var(--red); background: var(--red-light); color: var(--red); }
   .opt.selected { transform: scale(0.98); }
 
-  .nav-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 2px;
-  }
-  .nav-btn {
-    padding: 10px 24px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: #fff;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    color: var(--text);
-    transition: all 0.15s;
-  }
+  .nav-row { display: flex; justify-content: space-between; align-items: center; padding: 0 2px; }
+  .nav-btn { padding: 10px 24px; border-radius: 8px; border: 1px solid var(--border); background: #fff; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; color: var(--text); transition: all 0.15s; }
   .nav-btn:hover { background: var(--bg); }
-  .nav-btn.primary {
-    background: var(--green);
-    color: #fff;
-    border-color: var(--green);
-  }
+  .nav-btn.primary { background: var(--green); color: #fff; border-color: var(--green); }
   .nav-btn.primary:hover { background: var(--green-dark); }
   .nav-btn:disabled { opacity: 0.3; cursor: default; }
 
-  .done-card {
-    background: var(--card);
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    padding: 40px 24px;
-    text-align: center;
-  }
+  .done-card { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); padding: 40px 24px; text-align: center; }
   .done-icon { font-size: 52px; margin-bottom: 16px; }
   .done-title { font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--green-dark); margin-bottom: 8px; }
   .done-sub { font-size: 15px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
 
   /* ── RESULTS VIEW ── */
-  #results-view {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 24px 16px 48px;
-  }
-
-  .res-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  .res-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 26px;
-    color: var(--green-dark);
-  }
-  .vote-badge {
-    background: var(--green-light);
-    color: var(--green-dark);
-    border-radius: 99px;
-    padding: 5px 14px;
-    font-size: 13px;
-    font-weight: 600;
-  }
-
-  .res-card {
-    background: var(--card);
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    padding: 22px 24px;
-    margin-bottom: 16px;
-  }
+  #results-view { max-width: 700px; margin: 0 auto; padding: 24px 16px 48px; }
+  .res-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+  .res-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--green-dark); }
+  .vote-badge { background: var(--green-light); color: var(--green-dark); border-radius: 99px; padding: 5px 14px; font-size: 13px; font-weight: 600; }
+  .res-card { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); padding: 22px 24px; margin-bottom: 16px; }
   .res-q-num { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
   .res-q-text { font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 18px; line-height: 1.4; }
-
   .res-bar-wrap { margin-bottom: 10px; }
-  .res-bar-label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-    margin-bottom: 5px;
-  }
+  .res-bar-label { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 5px; }
   .res-bar-label .lbl { font-weight: 500; }
   .res-bar-label .cnt { color: var(--muted); }
-  .res-track {
-    height: 28px;
-    background: var(--bg);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .res-fill {
-    height: 100%;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    padding-left: 10px;
-    transition: width 0.6s ease;
-    min-width: 2px;
-  }
+  .res-track { height: 28px; background: var(--bg); border-radius: 8px; overflow: hidden; }
+  .res-fill { height: 100%; border-radius: 8px; display: flex; align-items: center; padding-left: 10px; transition: width 0.6s ease; min-width: 2px; }
   .res-fill.yes { background: var(--green); }
   .res-fill.no { background: var(--red); }
   .res-fill-pct { font-size: 13px; font-weight: 600; color: #fff; }
 
   /* ── ADMIN PANEL ── */
-  #admin-view {
-    max-width: 520px;
-    margin: 0 auto;
-    padding: 24px 16px 48px;
-  }
-  .admin-card {
-    background: var(--card);
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    padding: 28px 24px;
-    margin-bottom: 16px;
-  }
+  #admin-view { max-width: 520px; margin: 0 auto; padding: 24px 16px 48px; }
+  .admin-card { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); padding: 28px 24px; margin-bottom: 16px; }
   .admin-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--green-dark); margin-bottom: 6px; }
   .admin-sub { font-size: 14px; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
   #qr-canvas { display: block; margin: 0 auto 16px; border-radius: 10px; }
-  .url-box {
-    background: var(--bg);
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 13px;
-    color: var(--muted);
-    word-break: break-all;
-    text-align: center;
-    margin-bottom: 16px;
-    border: 1px solid var(--border);
-  }
+  .url-box { background: var(--bg); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: var(--muted); word-break: break-all; text-align: center; margin-bottom: 16px; border: 1px solid var(--border); }
 
   /* ── NAV BAR ── */
-  .top-nav {
-    background: var(--card);
-    border-bottom: 1px solid var(--border);
-    padding: 10px 20px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+  .top-nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .top-nav button { padding: 6px 16px; border-radius: 99px; border: 1px solid var(--border); background: transparent; font-family: 'DM Sans', sans-serif; font-size: 13px; cursor: pointer; color: var(--muted); transition: all 0.15s; }
+  .top-nav button.active { background: var(--green); color: #fff; border-color: var(--green); }
+
+  /* ── PROJECTOR VIEW ── */
+  #projector-view {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #ffffff;
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
   }
-  .top-nav button {
-    padding: 6px 16px;
+
+  .proj-header {
+    background: var(--green-dark);
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .proj-header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: #fff;
+    letter-spacing: -0.2px;
+  }
+  .proj-header-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 2px;
+  }
+  .proj-badge {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
     border-radius: 99px;
-    border: 1px solid var(--border);
-    background: transparent;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    cursor: pointer;
+    padding: 6px 18px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .proj-slide {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 80px;
+    overflow: hidden;
+  }
+
+  .proj-q-label {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 16px;
+  }
+
+  .proj-q-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 36px;
+    max-width: 900px;
+  }
+
+  .proj-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 860px;
+  }
+
+  .proj-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .proj-bar-lbl {
+    width: 80px;
+    font-size: 20px;
+    font-weight: 600;
+    flex-shrink: 0;
+    color: var(--text);
+  }
+
+  .proj-track {
+    flex: 1;
+    height: 56px;
+    background: #f0f0ee;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .proj-fill {
+    height: 100%;
+    border-radius: 12px;
+    transition: width 0.8s cubic-bezier(.4,0,.2,1);
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    min-width: 4px;
+  }
+  .proj-fill.yes { background: var(--green); }
+  .proj-fill.no { background: var(--red); }
+
+  .proj-fill-pct {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .proj-cnt {
+    width: 100px;
+    font-size: 20px;
+    font-weight: 600;
     color: var(--muted);
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .proj-no-votes {
+    font-size: 24px;
+    color: var(--muted);
+    margin-top: 16px;
+  }
+
+  .proj-footer {
+    background: #f4f6f5;
+    border-top: 1px solid var(--border);
+    padding: 16px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .proj-dots {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .proj-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #d0d5d2;
+    transition: all 0.2s;
+  }
+  .proj-dot.active {
+    background: var(--green);
+    width: 28px;
+    border-radius: 99px;
+  }
+
+  .proj-nav {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .proj-btn {
+    padding: 11px 28px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--text);
     transition: all 0.15s;
   }
-  .top-nav button.active {
-    background: var(--green);
-    color: #fff;
-    border-color: var(--green);
+  .proj-btn:hover { background: var(--bg); }
+  .proj-btn.primary { background: var(--green); color: #fff; border-color: var(--green); }
+  .proj-btn.primary:hover { background: var(--green-dark); }
+  .proj-btn.exit { border-color: #ddd; color: var(--muted); font-size: 14px; padding: 9px 18px; }
+  .proj-btn:disabled { opacity: 0.3; cursor: default; }
+
+  .proj-q-counter {
+    font-size: 15px;
+    color: var(--muted);
+    font-weight: 500;
   }
 
   @media (max-width: 420px) {
@@ -296,9 +301,10 @@
 </head>
 <body>
 
-<div class="top-nav">
+<div class="top-nav" id="top-nav">
   <button class="active" onclick="switchView('voter')">🗳️ Szavazás</button>
   <button onclick="switchView('results')">📊 Eredmények</button>
+  <button onclick="switchView('projector')">🖥️ Kivetítő</button>
   <button onclick="switchView('admin')">⚙️ Admin / QR kód</button>
 </div>
 
@@ -309,7 +315,6 @@
       <div class="brand-title">Digitális egészség</div>
       <div class="brand-sub">Csemegi Károly Emlékkonferencia · 2026</div>
     </div>
-
     <div id="vote-screen">
       <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:20%"></div></div>
       <div class="q-card" id="q-card">
@@ -319,12 +324,10 @@
         </div>
         <div class="q-opts">
           <button class="opt yes" id="opt-yes" onclick="selectOpt(0)">
-            <span class="opt-icon">✓</span>
-            <span>Igen</span>
+            <span class="opt-icon">✓</span><span>Igen</span>
           </button>
           <button class="opt no" id="opt-no" onclick="selectOpt(1)">
-            <span class="opt-icon">✗</span>
-            <span>Nem</span>
+            <span class="opt-icon">✗</span><span>Nem</span>
           </button>
         </div>
       </div>
@@ -333,7 +336,6 @@
         <button class="nav-btn primary" id="btn-next" onclick="nextQ()" disabled>Következő →</button>
       </div>
     </div>
-
     <div id="done-screen" style="display:none;">
       <div class="done-card">
         <div class="done-icon">🎉</div>
@@ -356,6 +358,31 @@
   <button class="nav-btn" onclick="switchView('voter')" style="margin-top:8px;">← Vissza a szavazáshoz</button>
 </div>
 
+<!-- PROJECTOR VIEW -->
+<div id="projector-view">
+  <div class="proj-header">
+    <div>
+      <div class="proj-header-title">Digitális egészség · Eredmények</div>
+      <div class="proj-header-sub">Csemegi Károly Emlékkonferencia · 2026</div>
+    </div>
+    <div class="proj-badge" id="proj-total-badge">0 szavazat</div>
+  </div>
+
+  <div class="proj-slide" id="proj-slide">
+    <!-- filled by JS -->
+  </div>
+
+  <div class="proj-footer">
+    <div class="proj-q-counter" id="proj-q-counter">1 / 5</div>
+    <div class="proj-dots" id="proj-dots"></div>
+    <div class="proj-nav">
+      <button class="proj-btn exit" onclick="exitProjector()">✕ Kilépés</button>
+      <button class="proj-btn" id="proj-prev" onclick="projPrev()" disabled>← Előző</button>
+      <button class="proj-btn primary" id="proj-next" onclick="projNext()">Következő →</button>
+    </div>
+  </div>
+</div>
+
 <!-- ADMIN VIEW -->
 <div id="admin-view">
   <div class="admin-card">
@@ -366,24 +393,10 @@
     <button class="nav-btn primary" onclick="generateQR()" style="width:100%; padding:12px; margin-bottom:10px;">QR kód generálása az aktuális URL-ből</button>
     <div style="font-size:13px; color:var(--muted); line-height:1.6;">
       <strong>Saját URL megadása:</strong><br>
-      <input type="text" id="custom-url" placeholder="https://felhasználónév.github.io/szavazas" 
+      <input type="text" id="custom-url" placeholder="https://felhasználónév.github.io/szavazas"
         style="width:100%; padding:9px 12px; border-radius:8px; border:1px solid var(--border); font-size:13px; margin-top:8px; margin-bottom:8px; font-family:'DM Sans',sans-serif;">
       <button class="nav-btn" onclick="generateQRCustom()" style="width:100%; padding:10px;">QR kód generálása megadott URL-ből</button>
     </div>
-  </div>
-  <div class="admin-card">
-    <div style="font-size:15px; font-weight:600; margin-bottom:12px;">GitHub Pages feltöltés – lépésről lépésre</div>
-    <ol style="font-size:14px; color:var(--muted); line-height:2; padding-left:18px;">
-      <li>Menj a <strong>github.com</strong> oldalra és hozz létre ingyenes fiókot</li>
-      <li>Kattints a <strong>New repository</strong> gombra</li>
-      <li>Adj nevet: pl. <code style="background:var(--bg); padding:2px 6px; border-radius:4px;">szavazas</code></li>
-      <li>Állítsd <strong>Public</strong>-ra, majd <strong>Create</strong></li>
-      <li>Kattints <strong>uploading an existing file</strong> linkre</li>
-      <li>Húzd be a letöltött <code style="background:var(--bg); padding:2px 6px; border-radius:4px;">szavazas.html</code> fájlt</li>
-      <li>Nevezd át <strong>index.html</strong>-re feltöltés előtt (vagy utána a GitHub-on)</li>
-      <li>Settings → Pages → Branch: <strong>main</strong> → Save</li>
-      <li>~1 perc múlva elérhető: <strong>felhasználónév.github.io/szavazas</strong></li>
-    </ol>
   </div>
   <div class="admin-card">
     <div style="font-size:14px; font-weight:600; margin-bottom:8px;">Szavazatok visszaállítása</div>
@@ -413,20 +426,34 @@ function saveVotes(v) { localStorage.setItem(STORE_KEY, JSON.stringify(v)); }
 let votes = loadVotes();
 let currentQ = 0;
 let userAnswers = new Array(questions.length).fill(null);
-let hasVoted = false;
+let projCurrentQ = 0;
+let projRefreshTimer = null;
 
 function switchView(v) {
-  ['voter','results','admin'].forEach(id => {
-    document.getElementById(id+'-view').style.display = 'none';
+  ['voter','results','admin','projector'].forEach(id => {
+    const el = document.getElementById(id+'-view');
+    el.style.display = 'none';
   });
-  document.getElementById(v+'-view').style.display = 'block';
+  const target = document.getElementById(v+'-view');
+  if (v === 'projector') {
+    target.style.display = 'flex';
+    document.getElementById('top-nav').style.display = 'none';
+    projCurrentQ = 0;
+    startProjRefresh();
+    renderProjSlide();
+  } else {
+    target.style.display = 'block';
+    document.getElementById('top-nav').style.display = 'flex';
+    stopProjRefresh();
+  }
   document.querySelectorAll('.top-nav button').forEach((b,i) => {
-    b.classList.toggle('active', ['voter','results','admin'][i] === v);
+    b.classList.toggle('active', ['voter','results','projector','admin'][i] === v);
   });
   if (v === 'results') renderResults();
   if (v === 'admin') generateQR();
 }
 
+/* ── VOTER ── */
 function renderQ() {
   document.getElementById('q-num').textContent = (currentQ+1) + '. kérdés / ' + questions.length;
   document.getElementById('q-text').textContent = questions[currentQ];
@@ -472,6 +499,7 @@ function resetVote() {
   renderQ();
 }
 
+/* ── RESULTS ── */
 function renderResults() {
   votes = loadVotes();
   const total = votes[0].reduce((a,b)=>a+b,0);
@@ -499,6 +527,93 @@ function renderResults() {
   document.getElementById('res-cards').innerHTML = html;
 }
 
+/* ── PROJECTOR ── */
+function startProjRefresh() {
+  stopProjRefresh();
+  projRefreshTimer = setInterval(() => {
+    votes = loadVotes();
+    renderProjSlide();
+  }, 3000);
+}
+
+function stopProjRefresh() {
+  if (projRefreshTimer) { clearInterval(projRefreshTimer); projRefreshTimer = null; }
+}
+
+function renderProjSlide() {
+  votes = loadVotes();
+  const qi = projCurrentQ;
+  const yes = votes[qi][0], no = votes[qi][1];
+  const t = yes + no;
+  const yesPct = t > 0 ? Math.round(yes/t*100) : 0;
+  const noPct  = t > 0 ? Math.round(no/t*100)  : 0;
+
+  const totalAll = votes[0].reduce((a,b)=>a+b,0);
+  document.getElementById('proj-total-badge').textContent = totalAll + ' szavazat';
+  document.getElementById('proj-q-counter').textContent = (qi+1) + ' / ' + questions.length;
+
+  // dots
+  let dotsHtml = '';
+  questions.forEach((_,i) => {
+    dotsHtml += `<div class="proj-dot${i===qi?' active':''}"></div>`;
+  });
+  document.getElementById('proj-dots').innerHTML = dotsHtml;
+
+  // nav buttons
+  document.getElementById('proj-prev').disabled = qi === 0;
+  document.getElementById('proj-next').textContent = qi === questions.length-1 ? '✕ Bezárás' : 'Következő →';
+
+  // slide content
+  let slideHtml = `
+    <div class="proj-q-label">${qi+1}. kérdés / ${questions.length}</div>
+    <div class="proj-q-text">${questions[qi]}</div>
+    <div class="proj-bars">
+      <div class="proj-bar-row">
+        <div class="proj-bar-lbl" style="color:var(--green-dark)">✓ Igen</div>
+        <div class="proj-track">
+          <div class="proj-fill yes" style="width:${yesPct}%">
+            ${yesPct > 5 ? `<span class="proj-fill-pct">${yesPct}%</span>` : ''}
+          </div>
+        </div>
+        <div class="proj-cnt">${yes} fő</div>
+      </div>
+      <div class="proj-bar-row">
+        <div class="proj-bar-lbl" style="color:var(--red)">✗ Nem</div>
+        <div class="proj-track">
+          <div class="proj-fill no" style="width:${noPct}%">
+            ${noPct > 5 ? `<span class="proj-fill-pct">${noPct}%</span>` : ''}
+          </div>
+        </div>
+        <div class="proj-cnt">${no} fő</div>
+      </div>
+      ${t===0 ? '<div class="proj-no-votes">Még nincs szavazat erre a kérdésre.</div>' : ''}
+    </div>
+  `;
+  document.getElementById('proj-slide').innerHTML = slideHtml;
+}
+
+function projNext() {
+  if (projCurrentQ < questions.length - 1) {
+    projCurrentQ++;
+    renderProjSlide();
+  } else {
+    exitProjector();
+  }
+}
+
+function projPrev() {
+  if (projCurrentQ > 0) {
+    projCurrentQ--;
+    renderProjSlide();
+  }
+}
+
+function exitProjector() {
+  stopProjRefresh();
+  switchView('results');
+}
+
+/* ── ADMIN ── */
 function generateQR() {
   const url = window.location.href.split('?')[0];
   document.getElementById('qr-url-display').textContent = url;
